@@ -26,16 +26,7 @@ public class Tracker {
     }
 
     public Item[] findAll() {
-        int size = 0;
-        Item[] itemsWithoutNull = new Item[this.size];
-        for (int i = 0; i < this.size; i++) {
-            Item item = items[i];
-            if (item != null) {
-                itemsWithoutNull[size++] = item;
-            }
-        }
-        itemsWithoutNull = Arrays.copyOf(itemsWithoutNull, size);
-        return itemsWithoutNull;
+        return Arrays.copyOf(items, this.size);
     }
 
 
