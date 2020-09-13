@@ -11,7 +11,7 @@ public class StartUITest {
     @Test
     public void whenCreateItem() {
         Output out = new ConsoleOutput();
-        Input in = new StubInput(
+        Input in = new StubInput(out,
                 new String[] {"0", "Item name", "1"}
         );
         Tracker tracker = new Tracker();
@@ -31,7 +31,7 @@ public class StartUITest {
         Item item = tracker.add(new Item("Replaced item"));
         /* Входные данные должны содержать ID добавленной заявки item.getId() */
         String replacedName = "New item name";
-        Input in = new StubInput(
+        Input in = new StubInput(out,
                 new String[] {"0", "1", replacedName,"1"}
         );
         UserAction[] actions = {
@@ -49,7 +49,7 @@ public class StartUITest {
         /* Добавим в tracker новую заявку */
         Item item = tracker.add(new Item("Deleted item"));
         /* Входные данные должны содержать ID добавленной заявки item.getId() */
-        Input in = new StubInput(
+        Input in = new StubInput(out,
                 new String[] {"0" , "1", "1"}
         );
         UserAction[] actions = {
@@ -63,7 +63,7 @@ public class StartUITest {
     @Test
     public void whenExit() {
         Output out = new StubOutput();
-        Input in = new StubInput(
+        Input in = new StubInput( out,
                 new String[] {"0"}
         );
         Tracker tracker = new Tracker();
@@ -73,7 +73,64 @@ public class StartUITest {
         new StartUI(out).init(in, tracker, actions);
         assertThat(out.toString(), is(
                 "Menu." + System.lineSeparator() +
-                        "0. Exit program" + System.lineSeparator()
+                        "0. Exit program" + System.lineSeparator() +
+                        "Select: " + System.lineSeparator()
+        ));
+    }
+
+    @Test
+    public void whenFindAll() {
+        Output out = new StubOutput();
+        Input in = new StubInput(out,
+                new String[] {"0", "1"}
+        );
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("Item1"));
+        UserAction[] actions = {
+                new FindAllAction(out),
+                new ExitAction()
+        };
+        new StartUI(out).init(in, tracker, actions);
+        assertThat(out.toString(), is(
+                "Menu." + System.lineSeparator() +
+                        "0. Show all items" + System.lineSeparator() +
+                        "1. Exit program" + System.lineSeparator() +
+                        "Select: " + System.lineSeparator() +
+                        "==== Find all items ====" + System.lineSeparator() +
+                        "Item{id=1, name='Item1'}" + System.lineSeparator() +
+                        "Menu." + System.lineSeparator() +
+                        "0. Show all items" + System.lineSeparator() +
+                        "1. Exit program" + System.lineSeparator() +
+                        "Select: " + System.lineSeparator()
+
+        ));
+    }
+
+    @Test
+    public void whenFindByName() {
+        Output out = new StubOutput();
+        Input in = new StubInput(out,
+                new String[] {"0", "Item1","1"}
+        );
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("Item1"));
+        UserAction[] actions = {
+                new FindByName(out),
+                new ExitAction()
+        };
+        new StartUI(out).init(in, tracker, actions);
+        assertThat(out.toString(), is(
+                "Menu." + System.lineSeparator() +
+                        "0. Find items by name" + System.lineSeparator() +
+                        "1. Exit program" + System.lineSeparator() +
+                        "Select: " + System.lineSeparator() +
+                        "Enter the name to search" + System.lineSeparator() +
+                        "Item{id=1, name='Item1'}" + System.lineSeparator() +
+                        "Menu." + System.lineSeparator() +
+                        "0. Find items by name" + System.lineSeparator() +
+                        "1. Exit program" + System.lineSeparator() +
+                        "Select: " + System.lineSeparator()
+
         ));
     }
 }
