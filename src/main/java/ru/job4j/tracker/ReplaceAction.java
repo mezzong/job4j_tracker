@@ -1,9 +1,16 @@
 package ru.job4j.tracker;
 
 public class ReplaceAction implements UserAction{
+
+    private final Output out;
+
+    public ReplaceAction(Output out) {
+        this.out = out;
+    }
+
     @Override
     public String name() {
-        return "==== Replace item ====";
+        return "Edit item";
     }
 
     @Override
@@ -11,9 +18,9 @@ public class ReplaceAction implements UserAction{
         int id = input.askInt("Enter id item");
         String name = input.askStr("Enter name to change: ");
         if (tracker.replace(id, new Item(name))) {
-            System.out.println("Success");
+            out.println("Success");
         } else {
-            System.out.println("Error id not found");
+            out.println("Error id not found");
         }
         return true;
     }

@@ -3,40 +3,42 @@ package ru.job4j.tracker;
 import java.util.Scanner;
 
 public class StartUI {
+    private final  Output out;
+
+    public StartUI(Output out) {
+        this.out = out;
+    }
 
     public void init(Input input, Tracker tracker, UserAction[] actions) {
         boolean run = true;
         while (run) {
-            this.showMenu();
+            this.showMenu(actions);
             int select = input.askInt("Select: ");
             UserAction action = actions[select];
             run = action.execute(input, tracker);
         }
     }
 
-    private void showMenu() {
-        System.out.println("Menu.");
-        System.out.println("0. Add new item");
-        System.out.println("1. Show all items");
-        System.out.println("2. Edit item");
-        System.out.println("3. Delete item");
-        System.out.println("4. Find item by id");
-        System.out.println("5. Find items by name");
-        System.out.println("6. Exit program");
+    private void showMenu(UserAction[] actions) {
+        out.println("Menu.");
+        for (int index = 0; index < actions.length; index++) {
+            out.println(index + ". " + actions[index].name());
+        }
     }
 
     public static void main(String[] args) {
+        Output output = new ConsoleOutput();
         Input input = new ConsoleInput();
         Tracker tracker = new Tracker();
         UserAction[] actions = {
-                new CreateAction(),
-                new FindAllAction(),
-                new ReplaceAction(),
-                new DeleteAction(),
-                new FindByIdAction(),
-                new FindByName(),
+                new CreateAction(output),
+                new FindAllAction(output),
+                new ReplaceAction(output),
+                new DeleteAction(output),
+                new FindByIdAction(output),
+                new FindByName(output),
                 new ExitAction()
         };
-        new StartUI().init(input, tracker, actions);
+        new StartUI(output).init(input, tracker, actions);
     }
 }
