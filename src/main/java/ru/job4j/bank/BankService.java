@@ -9,11 +9,15 @@ public class BankService {
     private Map<User, List<Account>> users = new HashMap<>();
 
     public void addUser(User user) {
-        users.putIfAbsent(user, new ArrayList<Account>());
+        users.putIfAbsent(user, new ArrayList<>());
     }
 
     public void addAccount(String passport, Account account) {
         User user = findByPassport(passport);
+        if (user == null) {
+            System.out.println("User not found");
+            return;
+        }
         List<Account> accountList = users.get(user);
         if (!accountList.contains(account)) {
             accountList.add(account);
@@ -25,6 +29,7 @@ public class BankService {
         for (User element : users.keySet()) {
             if (passport.equals(element.getPassport())) {
                 result = element;
+                break;
             }
         }
         return result;
@@ -32,11 +37,12 @@ public class BankService {
 
     public Account findByRequisite(String passport, String requisite) {
         User user = findByPassport(passport);
-        Account account = null;
-        List<Account> accountList = users.get(user);
-        if (accountList == null) {
+        if (user == null) {
+            System.out.println("User not found");
             return null;
         }
+        Account account = null;
+        List<Account> accountList = users.get(user);
         for (Account element : accountList) {
             if (requisite.equals(element.getRequisite())) {
                 account = element;
@@ -51,15 +57,20 @@ public class BankService {
         boolean rls = false;
         Account srcAccount = findByRequisite(srcPassport, srcRequisite);
         Account destAccount = findByRequisite(destPassport, destRequisite);
-        if (srcAccount == null || destAccount == null) {
-            return rls;
-        }
-        if ((srcAccount.getBalance() - amount) < 0) {
+        if (srcAccount == null || destAccount == null || (srcAccount.getBalance() - amount) < 0) {
             return rls;
         }
         srcAccount.setBalance(srcAccount.getBalance() - amount);
         destAccount.setBalance(destAccount.getBalance() + amount);
+        rls = true;
         return rls;
+    }
+
+    public static void main(String[] args) {
+        User user = new User("3434", "Petr Arsentev");
+        BankService bank = new BankService();
+        bank.addUser(user);
+        bank.addAccount("ffd", new Account("5546", 150D));
     }
 }
 
