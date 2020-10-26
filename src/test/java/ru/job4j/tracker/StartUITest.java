@@ -1,6 +1,5 @@
 package ru.job4j.tracker;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -10,8 +9,8 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-
 public class StartUITest {
+
     @Test
     public void whenCreateItem() {
         Output out = new ConsoleOutput();
@@ -35,7 +34,7 @@ public class StartUITest {
         /* Входные данные должны содержать ID добавленной заявки item.getId() */
         String replacedName = "New item name";
         Input in = new StubInput(out,
-                new String[] {"0", "1", replacedName,"1"}
+                new String[] {"0", "1", replacedName, "1"}
         );
         List<UserAction> actions = new ArrayList<>();
         actions.add(new ReplaceAction(out));
@@ -52,7 +51,7 @@ public class StartUITest {
         Item item = tracker.add(new Item("Deleted item"));
         /* Входные данные должны содержать ID добавленной заявки item.getId() */
         Input in = new StubInput(out,
-                new String[] {"0" , "1", "1"}
+                new String[] {"0", "1", "1"}
         );
         List<UserAction> actions = new ArrayList<>();
         actions.add(new DeleteAction(out));
@@ -64,7 +63,7 @@ public class StartUITest {
     @Test
     public void whenExit() {
         Output out = new StubOutput();
-        Input in = new StubInput( out,
+        Input in = new StubInput(out,
                 new String[] {"0"}
         );
         Tracker tracker = new Tracker();
@@ -109,7 +108,7 @@ public class StartUITest {
     public void whenFindByName() {
         Output out = new StubOutput();
         Input in = new StubInput(out,
-                new String[] {"0", "Item1","1"}
+                new String[] {"0", "Item1", "1"}
         );
         Tracker tracker = new Tracker();
         tracker.add(new Item("Item1"));
@@ -136,7 +135,7 @@ public class StartUITest {
     public void whenInvalidExit() {
         Output out = new StubOutput();
         Input in = new StubInput(out,
-                new String[] { "-1", "0" }
+                new String[]{"-1", "0"}
         );
         Tracker tracker = new Tracker();
         List<UserAction> actions = new ArrayList<>();

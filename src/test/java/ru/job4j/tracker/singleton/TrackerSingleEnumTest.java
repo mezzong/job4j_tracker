@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertSame;
 
-public class TrackerSingleEnumTest{
+public class TrackerSingleEnumTest {
     @Test
     public void getInstance() {
         TrackerSingleEnum tracker1 = TrackerSingleEnum.INSTANCE;

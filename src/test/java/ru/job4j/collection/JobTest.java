@@ -10,8 +10,8 @@ import static org.junit.Assert.assertThat;
 public class JobTest {
     @Test
     public void whenComparatorDescByNameAndDescPriority() {
-        Comparator<Job> cmpNamePriority = new JobDescByName().thenComparing(new JobDescByPriority());
-        int rsl = cmpNamePriority.compare(
+        Comparator<Job> namePriority = new JobDescByName().thenComparing(new JobDescByPriority());
+        int rsl = namePriority.compare(
                 new Job("Impl task", 0),
                 new Job("Fix bug", 1)
         );
