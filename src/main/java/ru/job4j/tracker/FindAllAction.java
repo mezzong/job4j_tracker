@@ -19,8 +19,7 @@ public class FindAllAction implements UserAction {
     public boolean execute(Input input, Tracker tracker) {
         out.println("==== Find all items ====");
         List<Item> items = tracker.findAll();
-        for (Item item :
-                items) {
+        for (Item item : items) {
             out.println(item);
         }
         return true;
