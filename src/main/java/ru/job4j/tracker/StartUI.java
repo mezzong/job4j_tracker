@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StartUI {
-    private final  Output out;
+    private final Output out;
 
     public StartUI(Output out) {
         this.out = out;

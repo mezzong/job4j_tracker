@@ -13,16 +13,16 @@ public class SortAscByNameItemTest {
     @Test
     public void ascSortByName() {
         List<Item> items = Arrays.asList(
-          new Item("C"),
-          new Item("B"),
-          new Item("A"),
-          new Item("D")
+                new Item("C"),
+                new Item("B"),
+                new Item("A"),
+                new Item("D")
         );
         List<Item> expected = Arrays.asList(
-          new Item("A"),
-          new Item("B"),
-          new Item("C"),
-          new Item("D")
+                new Item("A"),
+                new Item("B"),
+                new Item("C"),
+                new Item("D")
         );
         System.out.println(items);
         Collections.sort(items, new SortAscByNameItem());
