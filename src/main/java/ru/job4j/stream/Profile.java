@@ -16,11 +16,4 @@ public class Profile {
         return address;
     }
 
-    public List<Address> collect(List<Profile> profiles) {
-        return profiles.stream()
-                .map(x -> x.address)
-                .distinct()
-                .sorted((o1, o2) -> o1.getCity().compareTo(o2.getCity()))
-                .collect(Collectors.toList());
-    }
 }
