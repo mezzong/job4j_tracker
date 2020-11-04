@@ -26,11 +26,11 @@ public class BankService {
     }
 
     public User findByPassport(String passport) {
-        List<User> userList = users.keySet()
+        return users.keySet()
                 .stream()
                 .filter(user -> user.getPassport().equals(passport))
-                .collect(Collectors.toList());
-        return userList.size() != 0 ? userList.get(0) : null;
+                .findFirst()
+                .orElse(null);
     }
 
     public Account findByRequisite(String passport, String requisite) {
@@ -39,11 +39,11 @@ public class BankService {
             System.out.println("User not found");
             return null;
         }
-        List<Account> accountList = users.get(user)
+        return users.get(user)
                 .stream()
                 .filter(account -> account.getRequisite().equals(requisite))
-                .collect(Collectors.toList());
-        return accountList.size() != 0 ? accountList.get(0) : null;
+                .findFirst()
+                .orElse(null);
     }
 
     public boolean transferMoney(String srcPassport, String srcRequisite,
