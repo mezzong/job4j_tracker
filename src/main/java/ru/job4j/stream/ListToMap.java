@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 public class ListToMap {
   public static Map<String, Student> listToMap(List<Student> studentList) {
       return studentList.stream()
-              .distinct()
-              .collect(Collectors.toMap(Student::getSurname, e -> e));
+              .collect(Collectors.toMap(Student::getSurname, e -> e, (a, b) -> b));
   }
 }
