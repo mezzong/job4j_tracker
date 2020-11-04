@@ -11,9 +11,7 @@ import java.util.Map;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class ListToMapTest{
-
-
+public class ListToMapTest {
 
     @Test
     public void whenCollectAddresses() {
