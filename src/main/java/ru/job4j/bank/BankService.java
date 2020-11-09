@@ -1,7 +1,6 @@
 package ru.job4j.bank;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class BankService {
     private Map<User, List<Account>> users = new HashMap<>();
@@ -40,16 +39,16 @@ public class BankService {
 
     public boolean transferMoney(String srcPassport, String srcRequisite,
                                  String destPassport, String destRequisite, double amount) {
-        boolean rls = false;
-        Account srcAccount = findByRequisite(srcPassport, srcRequisite).orElse(null);
-        Account destAccount = findByRequisite(destPassport, destRequisite).orElse(null);
-        if (srcAccount == null || destAccount == null || (srcAccount.getBalance() - amount) < 0) {
-            return rls;
+        Optional<Account> srcAccount = findByRequisite(srcPassport, srcRequisite);
+        Optional<Account> destAccount = findByRequisite(destPassport, destRequisite);
+        if (!srcAccount.isPresent()
+                || !destAccount.isPresent()
+                || (srcAccount.get().getBalance() - amount) < 0) {
+            return false;
         }
-        srcAccount.setBalance(srcAccount.getBalance() - amount);
-        destAccount.setBalance(destAccount.getBalance() + amount);
-        rls = true;
-        return rls;
+        srcAccount.get().setBalance(srcAccount.get().getBalance() - amount);
+        destAccount.get().setBalance(destAccount.get().getBalance() + amount);
+        return true;
     }
 
     public static void main(String[] args) {
