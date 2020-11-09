@@ -1,18 +1,15 @@
 package ru.job4j.tracker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Tracker {
-    /*private final Item[] items = new Item[100];*/
+
     private final List<Item> items = new ArrayList<>();
     private int id = 1;
-    /*private int size = 0;*/
 
     public Item add(Item item) {
         item.setId(id++);
-        /*items[size++] = item;*/
         items.add(item);
         return item;
     }
@@ -23,13 +20,10 @@ public class Tracker {
     }
 
     public List<Item> findAll() {
-        /*return Arrays.copyOf(items, this.size);*/
         return items;
     }
 
     public List<Item> findByName(String key) {
-        int rslSize = 0;
-        /*Item[] rsl = new Item[this.size];*/
         List<Item> rsl = new ArrayList<>();
         for (int index = 0; index < items.size(); index++) {
             String itemName = items.get(index).getName();
