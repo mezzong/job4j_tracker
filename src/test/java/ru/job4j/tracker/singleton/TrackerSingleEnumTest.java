@@ -9,8 +9,8 @@ import static org.junit.Assert.assertSame;
 public class TrackerSingleEnumTest {
     @Test
     public void getInstance() {
-        TrackerSingleEnum tracker1 = TrackerSingleEnum.INSTANCE;
-        TrackerSingleEnum tracker2 = TrackerSingleEnum.INSTANCE;
+        Tracker tracker1 = TrackerSingleEnum.INSTANCE.getTracker();
+        Tracker tracker2 = TrackerSingleEnum.INSTANCE.getTracker();
 
         assertSame(tracker1, tracker2);
     }
