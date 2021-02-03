@@ -3,6 +3,11 @@ language: java
 jdk:
   - openjdk14
 
+services:
+  - postgresql
+
+before_install:
+  - psql -c 'create database tracker;' -U postgres
 # используем режим обычного пользователя для сборки проекта.
 sudo: false
 
@@ -22,3 +27,4 @@ notifications:
 env:
   global:
     - CODECOV_TOKEN="6ff6ade6-e01f-4d88-aa42-15337450ea90"
+
