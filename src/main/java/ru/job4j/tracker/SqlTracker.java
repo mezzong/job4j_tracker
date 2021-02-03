@@ -7,8 +7,16 @@ import java.util.List;
 import java.util.Properties;
 
 public class SqlTracker implements Store {
-    private Connection cn;
+    private  Connection cn;
     private int id = 1;
+
+    public SqlTracker() {
+
+    }
+
+    public SqlTracker(Connection connection) {
+        this.cn = connection;
+    }
 
     public void init() {
         try (InputStream in = SqlTracker.class.getClassLoader()
@@ -52,7 +60,7 @@ public class SqlTracker implements Store {
         try (PreparedStatement statement
                      = cn.prepareStatement("update items set name = ? where id = ?")) {
             statement.setString(1, item.getName());
-            statement.setInt(2, item.getId());
+            statement.setInt(2, Integer.parseInt(id));
             result = statement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -118,10 +126,12 @@ public class SqlTracker implements Store {
                      cn.prepareStatement("select * from items where id = ?")) {
             statement.setInt(1, Integer.parseInt(id));
             try (ResultSet resultSet = statement.executeQuery()) {
-                result = new Item(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name")
-                );
+                if (resultSet.next()) {
+                    result = new Item(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name")
+                    );
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
