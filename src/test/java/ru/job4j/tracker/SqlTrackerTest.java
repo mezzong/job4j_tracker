@@ -41,13 +41,10 @@ public class SqlTrackerTest {
     @Test
     public void whenReplace() throws Exception {
         try (SqlTracker sqlTracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            Item bug = new Item();
-            bug.setName("Bug");
+            Item bug = new Item("Bug");
             sqlTracker.add(bug);
             int id = 1;
-            Item bugWithDesc = new Item();
-            bugWithDesc.setId(1);
-            bugWithDesc.setName("Bug with description");
+            Item bugWithDesc = new Item(1, "Bug with description");
             sqlTracker.replace(String.valueOf(id), bugWithDesc);
             assertThat(sqlTracker.findById(String.valueOf(id)).getName(),
                     is("Bug with description"));
@@ -57,14 +54,10 @@ public class SqlTrackerTest {
     @Test
     public void whenDelete() throws Exception {
         try (SqlTracker sqlTracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            Item bug = new Item();
-            Item testItem1 = new Item();
-            Item testItem2 = new Item();
-            Item testItem3 = new Item();
-            bug.setName("Bug");
-            testItem1.setName("testItem1");
-            testItem2.setName("testItem2");
-            testItem3.setName("testItem3");
+            Item bug = new Item("Bug");
+            Item testItem1 = new Item("testItem1");
+            Item testItem2 = new Item("testItem2");
+            Item testItem3 = new Item("testItem3");
             sqlTracker.add(bug);
             sqlTracker.add(testItem1);
             sqlTracker.add(testItem2);
@@ -77,8 +70,7 @@ public class SqlTrackerTest {
     @Test
     public void whenFindItemById() throws Exception {
         try (SqlTracker sqlTracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            Item testItem = new Item();
-            testItem.setName("Test item");
+            Item testItem = new Item("Test item");
             sqlTracker.add(testItem);
             Item result = sqlTracker.findById("1");
             assertThat(1, is(1));
@@ -88,12 +80,9 @@ public class SqlTrackerTest {
     @Test
     public void whenFindItemByName() throws Exception {
         try (SqlTracker sqlTracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            Item testItem1 = new Item();
-            Item testItem2 = new Item();
-            Item testItem3 = new Item();
-            testItem1.setName("Test item 1");
-            testItem2.setName("Test item 2");
-            testItem3.setName("Test item 1");
+            Item testItem1 = new Item("Test item 1");
+            Item testItem2 = new Item("Test item 2");
+            Item testItem3 = new Item("Test item 1");
             sqlTracker.add(testItem1);
             sqlTracker.add(testItem2);
             sqlTracker.add(testItem3);
